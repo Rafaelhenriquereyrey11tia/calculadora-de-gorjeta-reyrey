@@ -19,4 +19,40 @@ function receiveNumberOfPeopleValue() {
     calculate();
 }
 
+function receiveTipPercentageValue(value) {
+    tipPercentage = value / 100;
+    removeClassButtonSelected();
+    document.querySelector("#custom-tip").value = "";
+    buttonSelected = document.querySelector(`#button-${value}`);
+    if (buttonSelected) {
+        buttonSelected.classList.add("button-selected");
+    }
+    calculate();
+}
+
+function receiveCustomTipPercentageValue() {
+    tipPercentage = (document.querySelector("#custom-tip").valueAsNumber || 0) / 100;
+    removeClassButtonSelected();
+    calculate();
+}
+
+function removeClassButtonSelected() {
+    if (buttonSelected !== null) {
+        buttonSelected.classList.remove("button-selected");
+        buttonSelected = null;
+    }
+}
+
+function calculate() {
+    if (bill > 0 && tipPercentage > 0 && numberOfPeople > 0) {
+        let tipAmountPerson = (bill * tipPercentage) / numberOfPeople;
+        let totalPerson = (bill / numberOfPeople) + tipAmountPerson;
+
+        let tipAmountStrong = document.querySelector(".amount strong");
+        let totalStrong = document.querySelector(".total strong");
+
+        if (tipAmountStrong) tipAmountStrong.innerText = `$${tipAmountPerson.toFixed(2)}`;
+        if (totalStrong) totalStrong.innerText = `$${totalPerson.toFixed(2)}`;
+    }
+}
 
